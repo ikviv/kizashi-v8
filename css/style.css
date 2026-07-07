@@ -2034,3 +2034,130 @@ right:20px;
 }
 
 }
+
+
+
+/* ==========================================================
+   KIZASHI V8 FINAL PREMIUM OVERRIDE
+   ========================================================== */
+
+.header{
+    background:#ffffff !important;
+    backdrop-filter:none !important;
+    box-shadow:0 4px 20px rgba(0,0,0,.08) !important;
+}
+
+.logo h2,
+.logo span,
+.nav-links a{
+    color:#111111 !important;
+}
+
+.nav-links a:hover{
+    color:#C8102E !important;
+}
+
+.nav-btn{
+    background:#C8102E !important;
+    color:#fff !important;
+}
+
+.thirukkural{
+    background:#ffffff !important;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.kural-small{
+    color:#C8102E;
+    font-size:16px;
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.thirukkural h2{
+    color:#111 !important;
+    font-size:28px;
+}
+
+.thirukkural blockquote{
+    color:#111 !important;
+    font-size:34px;
+    line-height:1.7;
+    max-width:700px;
+    margin:20px auto;
+}
+
+.author{
+    color:#777 !important;
+    font-size:17px;
+    margin-top:10px;
+}
+
+.meaning{
+    color:#555 !important;
+    font-size:18px;
+    line-height:1.9;
+    max-width:650px;
+    margin:25px auto;
+}
+
+.kural-cta{
+    display:block;
+    color:#C8102E;
+    font-weight:700;
+    margin-top:20px;
+}
+
+.hero{
+    background:#fff;
+}
+
+.hero h1,
+.about-content h3,
+.section-title h2{
+    color:#111;
+}
+
+@media(max-width:768px){
+
+.header{
+    position:fixed;
+    top:0;
+}
+
+.thirukkural{
+    min-height:100vh;
+    padding:95px 20px 40px;
+}
+
+.thirukkural blockquote{
+    font-size:26px;
+}
+
+.meaning{
+    font-size:16px;
+}
+
+.hero{
+    padding-top:70px;
+}
+
+.hero h1{
+    font-size:38px;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+.btn-primary,
+.btn-secondary{
+    width:100%;
+}
+
+}
