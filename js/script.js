@@ -1,6 +1,6 @@
 /* ===========================================
    KIZASHI Japanese Institute
-   Premium JavaScript
+   Premium JavaScript V8
 =========================================== */
 
 // ===============================
@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             loader.style.opacity = "0";
             loader.style.visibility = "hidden";
-        }, 1000);
+        }, 800);
     }
 
 });
@@ -32,11 +32,13 @@ counters.forEach(counter => {
 
         const target = +counter.dataset.target;
         const current = +counter.innerText;
+
         const increment = target / 80;
 
         if (current < target) {
 
             counter.innerText = Math.ceil(current + increment);
+
             setTimeout(updateCounter, 20);
 
         } else {
@@ -61,15 +63,7 @@ window.addEventListener("scroll", () => {
 
     if (!topBtn) return;
 
-    if (window.scrollY > 500) {
-
-        topBtn.style.display = "block";
-
-    } else {
-
-        topBtn.style.display = "none";
-
-    }
+    topBtn.style.display = window.scrollY > 500 ? "block" : "none";
 
 });
 
@@ -79,8 +73,9 @@ if (topBtn) {
 
         window.scrollTo({
 
-            top: 0,
-            behavior: "smooth"
+            top:0,
+
+            behavior:"smooth"
 
         });
 
@@ -89,7 +84,7 @@ if (topBtn) {
 }
 
 // ===============================
-// Header Effects
+// Header
 // ===============================
 
 const header = document.querySelector(".header");
@@ -99,31 +94,26 @@ window.addEventListener("scroll", () => {
 
     if (!header) return;
 
-    // Show navbar only after Thirukkural
+    // Show Header only after Thirukkural
 
-    if (thirukkural && window.scrollY > thirukkural.offsetHeight - 80) {
+    if (thirukkural) {
 
-        header.style.top = "0";
+        if (window.scrollY > thirukkural.offsetHeight - 80) {
 
-    } else {
+            header.style.top = "0";
 
-        header.style.top = "-100px";
+        } else {
 
-    }
+            header.style.top = "-100px";
 
-    // Shadow
-
-    if (window.scrollY > 80) {
-
-        header.style.background = "rgba(5,8,22,.92)";
-        header.style.boxShadow = "0 15px 40px rgba(0,0,0,.35)";
-
-    } else {
-
-        header.style.background = "rgba(5,8,22,.45)";
-        header.style.boxShadow = "none";
+        }
 
     }
+
+    // WHITE HEADER
+
+    header.style.background = "#ffffff";
+    header.style.boxShadow = "0 5px 20px rgba(0,0,0,.08)";
 
 });
 
@@ -131,11 +121,11 @@ window.addEventListener("scroll", () => {
 // Reveal Animation
 // ===============================
 
-const observer = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver((entries)=>{
 
-    entries.forEach(entry => {
+    entries.forEach(entry=>{
 
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
 
             entry.target.classList.add("show");
 
@@ -143,15 +133,16 @@ const observer = new IntersectionObserver(entries => {
 
     });
 
-}, {
+},{
 
-    threshold: 0.15
+    threshold:0.15
 
 });
 
-document.querySelectorAll(".section").forEach(section => {
+document.querySelectorAll(".section").forEach(section=>{
 
     section.classList.add("hidden");
+
     observer.observe(section);
 
 });
@@ -163,17 +154,17 @@ document.querySelectorAll(".section").forEach(section => {
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 
-if (menuBtn && navLinks) {
+if(menuBtn && navLinks){
 
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click",()=>{
 
         navLinks.classList.toggle("active");
 
     });
 
-    document.querySelectorAll(".nav-links a").forEach(link => {
+    document.querySelectorAll(".nav-links a").forEach(link=>{
 
-        link.addEventListener("click", () => {
+        link.addEventListener("click",()=>{
 
             navLinks.classList.remove("active");
 
