@@ -2265,3 +2265,90 @@ right:20px;
 .course-card h3{font-size:32px;}
 .course-info{padding:25px;}
 }
+
+
+/* ==========================================================
+   KIZASHI V10 JAPAN CAREER PROGRAM
+   ========================================================== */
+
+.price-old{
+display:block;
+font-size:18px;
+font-weight:600;
+color:#8a8a8a;
+text-decoration:line-through;
+margin-bottom:8px;
+}
+
+.course-card h3{
+font-size:38px;
+font-weight:800;
+color:#C8102E;
+line-height:1.2;
+}
+
+.course-card h2{
+font-size:54px;
+font-weight:800;
+color:#C8102E;
+line-height:1.2;
+}
+
+.course-card p{
+line-height:2;
+font-size:16px;
+}
+
+.course-card.featured{
+border:3px solid #C8102E;
+background:linear-gradient(180deg,#fff,#fff7f7);
+position:relative;
+overflow:hidden;
+}
+
+.course-card.featured::after{
+content:"BEST VALUE";
+position:absolute;
+top:18px;
+right:-42px;
+background:#C8102E;
+color:#fff;
+padding:8px 48px;
+font-size:12px;
+font-weight:700;
+transform:rotate(45deg);
+}
+
+.course-card.featured h2{
+font-size:60px;
+}
+
+.level{
+letter-spacing:1px;
+}
+
+.course-card a{
+margin-top:25px;
+padding:16px;
+font-size:17px;
+}
+
+.course-info{
+background:#fffaf8;
+border-left:6px solid #C8102E;
+}
+
+.course-info p{
+font-size:18px;
+line-height:2;
+}
+
+@media(max-width:768px){
+.price-old{font-size:16px;}
+.course-card h2{font-size:42px;}
+.course-card h3{font-size:30px;}
+.course-card.featured::after{
+right:-48px;
+font-size:10px;
+}
+}
