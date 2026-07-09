@@ -1,135 +1,181 @@
-/*==================================================
-KIZASHI Japanese Language & Career Academy
-Version : V9 Premium
-==================================================*/
+/* ==========================================
+   KIZASHI Japanese Institute
+   script.js
+========================================== */
 
-'use strict';
+// ==========================
+// Loader
+// ==========================
+window.addEventListener("load", () => {
 
-/*==================================================
-AOS
-==================================================*/
+    const loader = document.getElementById("loader");
 
-AOS.init({
-    duration: 1000,
-    once: true,
-    easing: "ease-in-out"
+    if (loader) {
+
+        setTimeout(() => {
+
+            loader.style.opacity = "0";
+            loader.style.visibility = "hidden";
+
+        }, 700);
+
+    }
+
 });
 
-/*==================================================
-MOBILE MENU
-==================================================*/
+// ==========================
+// Counter Animation
+// ==========================
 
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+const counters = document.querySelectorAll(".counter");
 
-if (menuToggle) {
+const runCounter = (counter) => {
 
-    menuToggle.addEventListener("click", () => {
+    const target = Number(counter.dataset.target);
 
-        navLinks.classList.toggle("active");
+    let current = 0;
 
-        menuToggle.innerHTML = navLinks.classList.contains("active")
-            ? '<i class="fas fa-times"></i>'
-            : '<i class="fas fa-bars"></i>';
+    const speed = target / 80;
 
-    });
+    function update() {
 
-}
+        current += speed;
 
-/*==================================================
-CLOSE MOBILE MENU
-==================================================*/
+        if (current < target) {
 
-document.querySelectorAll(".nav-links a").forEach(link => {
+            counter.innerText = Math.ceil(current);
 
-    link.addEventListener("click", () => {
+            requestAnimationFrame(update);
 
-        navLinks.classList.remove("active");
+        } else {
 
-        if(menuToggle){
+            counter.innerText = target;
 
-            menuToggle.innerHTML =
-            '<i class="fas fa-bars"></i>';
+        }
+
+    }
+
+    update();
+
+};
+
+const counterObserver = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            runCounter(entry.target);
+
+            counterObserver.unobserve(entry.target);
 
         }
 
     });
 
-});
+}, {
 
-/*==================================================
-STICKY HEADER
-==================================================*/
-
-const header = document.querySelector(".header");
-
-window.addEventListener("scroll", () => {
-
-    if(window.scrollY > 80){
-
-        header.style.background="rgba(255,255,255,.95)";
-
-        header.style.boxShadow="0 10px 25px rgba(0,0,0,.08)";
-
-    }
-
-    else{
-
-        header.style.background="rgba(255,255,255,.90)";
-
-        header.style.boxShadow="none";
-
-    }
+    threshold: 0.5
 
 });
 
-/*==================================================
-SCROLL TO TOP
-==================================================*/
+counters.forEach(counter => {
 
-const topBtn = document.getElementById("topBtn");
-
-window.addEventListener("scroll",()=>{
-
-    if(window.scrollY>400){
-
-        topBtn.style.display="flex";
-
-    }
-
-    else{
-
-        topBtn.style.display="none";
-
-    }
+    counterObserver.observe(counter);
 
 });
 
-topBtn.addEventListener("click",()=>{
+// ==========================
+// Reveal Animation
+// ==========================
 
-    window.scrollTo({
+const hiddenElements = document.querySelectorAll(
 
-        top:0,
+".section,.course-card,.why-card,.testimonial-card,.contact-card,.stat-box"
 
-        behavior:"smooth"
+);
+
+hiddenElements.forEach(el => {
+
+    el.classList.add("hidden");
+
+});
+
+const revealObserver = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.classList.add("show");
+
+        }
 
     });
 
+}, {
+
+    threshold: 0.15
+
 });
 
-/*==================================================
-SMOOTH SCROLL
-==================================================*/
+hiddenElements.forEach(el => {
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+    revealObserver.observe(el);
 
-    anchor.addEventListener("click",function(e){
+});
 
-        e.preventDefault();
+// ==========================
+// Back To Top Button
+// ==========================
 
-        const target=document.querySelector(this.getAttribute("href"));
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+
+    if (!topBtn) return;
+
+    if (window.scrollY > 500) {
+
+        topBtn.style.display = "flex";
+
+    } else {
+
+        topBtn.style.display = "none";
+
+    }
+
+});
+
+if (topBtn) {
+
+    topBtn.addEventListener("click", () => {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    });
+
+}
+
+// ==========================
+// Smooth Scroll
+// ==========================
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener("click", function(e){
+
+        const target = document.querySelector(this.getAttribute("href"));
 
         if(target){
+
+            e.preventDefault();
 
             target.scrollIntoView({
 
@@ -143,101 +189,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
 });
 
-/*==================================================
-COUNTER ANIMATION
-==================================================*/
+// ==========================
+// Active Navigation
+// ==========================
 
-const counters=document.querySelectorAll(".counter");
+const sections = document.querySelectorAll("section");
 
-const speed=200;
-
-counters.forEach(counter=>{
-
-    const animate=()=>{
-
-        const value=+counter.getAttribute("data-target");
-
-        const data=+counter.innerText;
-
-        const time=value/speed;
-
-        if(data<value){
-
-            counter.innerText=Math.ceil(data+time);
-
-            setTimeout(animate,10);
-
-        }
-
-        else{
-
-            counter.innerText=value;
-
-        }
-
-    };
-
-    animate();
-
-});
-/*==================================================
-FAQ ACCORDION
-==================================================*/
-
-const faqItems = document.querySelectorAll(".faq-item");
-
-faqItems.forEach(item => {
-
-    const question = item.querySelector(".faq-question");
-    const answer = item.querySelector(".faq-answer");
-    const icon = item.querySelector("i");
-
-    question.addEventListener("click", () => {
-
-        faqItems.forEach(other => {
-
-            if (other !== item) {
-
-                other.querySelector(".faq-answer").style.display = "none";
-
-                other.querySelector("i").classList.remove("fa-minus");
-
-                other.querySelector("i").classList.add("fa-plus");
-
-            }
-
-        });
-
-        if (answer.style.display === "block") {
-
-            answer.style.display = "none";
-
-            icon.classList.remove("fa-minus");
-
-            icon.classList.add("fa-plus");
-
-        }
-
-        else {
-
-            answer.style.display = "block";
-
-            icon.classList.remove("fa-plus");
-
-            icon.classList.add("fa-minus");
-
-        }
-
-    });
-
-});
-
-/*==================================================
-ACTIVE NAVIGATION
-==================================================*/
-
-const sections = document.querySelectorAll("section[id]");
-const navItems = document.querySelectorAll(".nav-links a");
+const navLinks = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", () => {
 
@@ -245,11 +203,9 @@ window.addEventListener("scroll", () => {
 
     sections.forEach(section => {
 
-        const sectionTop = section.offsetTop - 150;
-        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.offsetTop - 120;
 
-        if (window.pageYOffset >= sectionTop &&
-            window.pageYOffset < sectionTop + sectionHeight) {
+        if (pageYOffset >= sectionTop) {
 
             current = section.getAttribute("id");
 
@@ -257,11 +213,15 @@ window.addEventListener("scroll", () => {
 
     });
 
-    navItems.forEach(link => {
+    navLinks.forEach(link => {
 
         link.classList.remove("active");
 
-        if (link.getAttribute("href") === "#" + current) {
+        if (
+
+            link.getAttribute("href") === "#" + current
+
+        ) {
 
             link.classList.add("active");
 
@@ -271,178 +231,78 @@ window.addEventListener("scroll", () => {
 
 });
 
-/*==================================================
-LOADER
-==================================================*/
+// ==========================
+// Header Hide / Show
+// ==========================
 
-window.addEventListener("load", () => {
+const header = document.querySelector(".header");
 
-    const loader = document.getElementById("loader");
+let lastScroll = 0;
 
-    if(loader){
+window.addEventListener("scroll", () => {
 
-        loader.style.opacity = "0";
+    if(!header) return;
 
-        loader.style.visibility = "hidden";
+    const currentScroll = window.pageYOffset;
 
-        loader.style.transition = ".6s";
+    if(currentScroll <= 0){
+
+        header.style.top = "0";
+
+        return;
 
     }
 
+    if(currentScroll > lastScroll){
+
+        header.style.top = "-100px";
+
+    }else{
+
+        header.style.top = "0";
+
+    }
+
+    lastScroll = currentScroll;
+
 });
 
-/*==================================================
-IMAGE HOVER EFFECT
-==================================================*/
+// ==========================
+// Mobile Menu
+// ==========================
 
-const galleryImages = document.querySelectorAll(".gallery-item img");
+const menuBtn = document.querySelector(".menu-btn");
 
-galleryImages.forEach(image => {
+const navMenu = document.querySelector(".nav-links");
 
-    image.addEventListener("mouseenter", () => {
+if(menuBtn){
 
-        image.style.transform = "scale(1.1)";
+    menuBtn.addEventListener("click",()=>{
+
+        navMenu.classList.toggle("active");
 
     });
 
-    image.addEventListener("mouseleave", () => {
+}
 
-        image.style.transform = "scale(1)";
+// ==========================
+// Gallery Hover Animation
+// ==========================
+
+document.querySelectorAll(".gallery-grid img").forEach(img=>{
+
+    img.addEventListener("mouseenter",()=>{
+
+        img.style.transform="scale(1.05)";
+
+    });
+
+    img.addEventListener("mouseleave",()=>{
+
+        img.style.transform="scale(1)";
 
     });
 
 });
 
-/*==================================================
-SCROLL REVEAL EFFECT
-==================================================*/
-
-const revealElements = document.querySelectorAll(
-
-".course-card,.why-card,.student-card,.testimonial-card,.company-box"
-
-);
-
-const revealObserver = new IntersectionObserver(
-
-(entries) => {
-
-entries.forEach(entry => {
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
-});
-
-},
-
-{
-
-threshold:0.2
-
-}
-
-);
-
-revealElements.forEach(el=>{
-
-revealObserver.observe(el);
-
-});
-
-/*==================================================
-BUTTON RIPPLE EFFECT
-==================================================*/
-
-const buttons = document.querySelectorAll(
-
-".btn-primary,.btn-secondary,.course-btn"
-
-);
-
-buttons.forEach(button=>{
-
-button.addEventListener("click",function(e){
-
-const circle=document.createElement("span");
-
-const diameter=Math.max(
-
-button.clientWidth,
-
-button.clientHeight
-
-);
-
-const radius=diameter/2;
-
-circle.style.width=circle.style.height=`${diameter}px`;
-
-circle.style.left=`${e.clientX-button.offsetLeft-radius}px`;
-
-circle.style.top=`${e.clientY-button.offsetTop-radius}px`;
-
-circle.classList.add("ripple");
-
-const ripple=button.getElementsByClassName("ripple")[0];
-
-if(ripple){
-
-ripple.remove();
-
-}
-
-button.appendChild(circle);
-
-});
-
-});
-
-/*==================================================
-HERO FLOATING ANIMATION
-==================================================*/
-
-const heroImage=document.querySelector(".hero-right img");
-
-if(heroImage){
-
-window.addEventListener("mousemove",(e)=>{
-
-const x=(window.innerWidth/2-e.pageX)/60;
-
-const y=(window.innerHeight/2-e.pageY)/60;
-
-heroImage.style.transform=
-
-`translate(${x}px,${y}px)`;
-
-});
-
-}
-
-/*==================================================
-CONSOLE MESSAGE
-==================================================*/
-
-console.log(
-
-"%cWelcome to KIZASHI 🇯🇵",
-
-"color:white;background:#0F4C81;font-size:18px;padding:10px 20px;border-radius:8px;"
-
-);
-
-console.log(
-
-"%cDesigned with ❤️",
-
-"color:#C8102E;font-size:14px;"
-
-);
-
-/*==================================================
-END OF SCRIPT
-==================================================*/
+console.log("✅ KIZASHI Website Loaded Successfully");
