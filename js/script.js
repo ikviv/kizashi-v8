@@ -1,6 +1,6 @@
 /* ==========================================
    KIZASHI Japanese Institute
-   script.js
+   script.js (Final Version)
 ========================================== */
 
 // ==========================
@@ -29,13 +29,13 @@ window.addEventListener("load", () => {
 
 const counters = document.querySelectorAll(".counter");
 
-const runCounter = (counter) => {
+function runCounter(counter) {
 
-    const target = Number(counter.dataset.target);
+    const target = Number(counter.dataset.target || 0);
 
     let current = 0;
 
-    const speed = target / 80;
+    const speed = Math.max(target / 80, 1);
 
     function update() {
 
@@ -43,13 +43,13 @@ const runCounter = (counter) => {
 
         if (current < target) {
 
-            counter.innerText = Math.ceil(current);
+            counter.textContent = Math.ceil(current);
 
             requestAnimationFrame(update);
 
         } else {
 
-            counter.innerText = target;
+            counter.textContent = target;
 
         }
 
@@ -57,7 +57,7 @@ const runCounter = (counter) => {
 
     update();
 
-};
+}
 
 const counterObserver = new IntersectionObserver((entries) => {
 
@@ -89,15 +89,15 @@ counters.forEach(counter => {
 // Reveal Animation
 // ==========================
 
-const hiddenElements = document.querySelectorAll(
+const revealItems = document.querySelectorAll(
 
 ".section,.course-card,.why-card,.testimonial-card,.contact-card,.stat-box"
 
 );
 
-hiddenElements.forEach(el => {
+revealItems.forEach(item => {
 
-    el.classList.add("hidden");
+    item.classList.add("hidden");
 
 });
 
@@ -119,9 +119,9 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 });
 
-hiddenElements.forEach(el => {
+revealItems.forEach(item => {
 
-    revealObserver.observe(el);
+    revealObserver.observe(item);
 
 });
 
@@ -135,15 +135,7 @@ window.addEventListener("scroll", () => {
 
     if (!topBtn) return;
 
-    if (window.scrollY > 500) {
-
-        topBtn.style.display = "flex";
-
-    } else {
-
-        topBtn.style.display = "none";
-
-    }
+    topBtn.style.display = window.scrollY > 500 ? "flex" : "none";
 
 });
 
@@ -169,19 +161,27 @@ if (topBtn) {
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-    anchor.addEventListener("click", function(e){
+    anchor.addEventListener("click", function (e) {
 
         const target = document.querySelector(this.getAttribute("href"));
 
-        if(target){
+        if (target) {
 
             e.preventDefault();
 
             target.scrollIntoView({
 
-                behavior:"smooth"
+                behavior: "smooth",
+
+                block: "start"
 
             });
+
+            if (navMenu) {
+
+                navMenu.classList.remove("active");
+
+            }
 
         }
 
@@ -193,7 +193,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Active Navigation
 // ==========================
 
-const sections = document.querySelectorAll("section");
+const sections = document.querySelectorAll("section[id]");
 
 const navLinks = document.querySelectorAll(".nav-links a");
 
@@ -205,9 +205,9 @@ window.addEventListener("scroll", () => {
 
         const sectionTop = section.offsetTop - 120;
 
-        if (pageYOffset >= sectionTop) {
+        if (window.pageYOffset >= sectionTop) {
 
-            current = section.getAttribute("id");
+            current = section.id;
 
         }
 
@@ -217,11 +217,7 @@ window.addEventListener("scroll", () => {
 
         link.classList.remove("active");
 
-        if (
-
-            link.getAttribute("href") === "#" + current
-
-        ) {
+        if (link.getAttribute("href") === "#" + current) {
 
             link.classList.add("active");
 
@@ -241,25 +237,37 @@ let lastScroll = 0;
 
 window.addEventListener("scroll", () => {
 
-    if(!header) return;
+    if (!header) return;
 
     const currentScroll = window.pageYOffset;
 
-    if(currentScroll <= 0){
+    if (currentScroll <= 0) {
 
         header.style.top = "0";
+
+        header.classList.remove("scrolled");
 
         return;
 
     }
 
-    if(currentScroll > lastScroll){
+    if (currentScroll > lastScroll && currentScroll > 100) {
 
-        header.style.top = "-100px";
+        header.style.top = "-85px";
 
-    }else{
+    } else {
 
         header.style.top = "0";
+
+    }
+
+    if (currentScroll > 50) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
 
     }
 
@@ -275,9 +283,9 @@ const menuBtn = document.querySelector(".menu-btn");
 
 const navMenu = document.querySelector(".nav-links");
 
-if(menuBtn){
+if (menuBtn && navMenu) {
 
-    menuBtn.addEventListener("click",()=>{
+    menuBtn.addEventListener("click", () => {
 
         navMenu.classList.toggle("active");
 
@@ -286,23 +294,7 @@ if(menuBtn){
 }
 
 // ==========================
-// Gallery Hover Animation
+// Console
 // ==========================
-
-document.querySelectorAll(".gallery-grid img").forEach(img=>{
-
-    img.addEventListener("mouseenter",()=>{
-
-        img.style.transform="scale(1.05)";
-
-    });
-
-    img.addEventListener("mouseleave",()=>{
-
-        img.style.transform="scale(1)";
-
-    });
-
-});
 
 console.log("✅ KIZASHI Website Loaded Successfully");
