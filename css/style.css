@@ -1348,24 +1348,30 @@ FOOTER
 ==================================*/
 
 .footer{
-padding:80px 20px;
-text-align:center;
-background:#040812;
-border-top:1px solid rgba(255,255,255,.08);
+    padding:80px 20px;
+    text-align:center;
+    background:#040812;
+    border-top:1px solid rgba(255,255,255,.08);
 }
 
 .footer-logo{
-width:80px;
-margin-bottom:20px;
+    width:100px;
+    margin-bottom:20px;
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.15));
 }
 
 .footer h2{
-margin-bottom:15px;
+    color:#ffffff;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:20px;
 }
 
 .footer p{
-color:var(--gray);
-margin-top:10px;
+    color:#d1d5db;
+    font-size:17px;
+    line-height:1.8;
+    margin-top:12px;
 }
 
 /*==================================
@@ -2639,23 +2645,16 @@ grid-template-columns:1fr;
 .header.scrolled{
     box-shadow:0 8px 25px rgba(0,0,0,.12);
 }
+
+
+
+
+
+/* Testimonial Name Fix */
 .testimonial-card h4,
 .testimonial-card .name {
-    color: #111827;   /* Dark black */
-    font-weight: 700;
-    margin-top: 15px;
-}
-.testimonial-card h4,
-.testimonial-card .name {
-    color: #111827;
-    font-weight: 700;
-    font-size: 20px;
-    margin-top: 15px;
-}
-.testimonial-card h4,
-.testimonial-card .name {
-    color: #111827;
-    font-weight: 700;
-    font-size: 20px;
-    margin-top: 18px;
+    color:#111827;
+    font-weight:700;
+    font-size:20px;
+    margin-top:18px;
 }
